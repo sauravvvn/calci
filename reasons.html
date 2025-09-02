@@ -1,0 +1,536 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<title>Reasons I Adore You</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    font-family: 'Dancing Script', cursive;
+    background: linear-gradient(135deg, #2c0b1a, #5a1a3c, #8a2c5f, #b83d7a);
+    color: #ffd1e6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    padding-bottom: 120px;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+
+  /* Floating hearts background */
+  .hearts-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .floating-heart {
+    position: absolute;
+    font-size: 18px;
+    opacity: 0.4;
+    color: #ff6b9e;
+    animation: floatHeart 20s linear infinite;
+    will-change: transform;
+  }
+
+  /* Mobile-optimized navigation */
+  nav {
+    position: fixed;
+    top: 15px; right: 15px;
+    z-index: 1000;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(20px);
+    border-radius: 50px;
+    padding: 10px 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    display: flex;
+    gap: 8px;
+    transition: transform 0.3s ease;
+  }
+  nav:hover {
+    transform: translateY(-3px);
+  }
+  .nav-links {
+    display: flex; gap: 8px;
+  }
+  .nav-link {
+    padding: 10px 14px;
+    border-radius: 50px;
+    background: rgba(255,185,209,0.4);
+    color: #7f2a52;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+    box-shadow: 0 3px 10px rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+    user-select: none;
+    touch-action: manipulation;
+    min-width: 44px; /* Touch-friendly size */
+    min-height: 44px;
+    justify-content: center;
+  }
+  .nav-link:hover, .nav-link.active {
+    background: linear-gradient(45deg, #ff6b9e, #c084fc);
+    color: white;
+    box-shadow: 0 8px 20px rgba(255,107,158,0.6);
+    transform: translateY(-2px) scale(1.05);
+  }
+
+  .container {
+    max-width: 100%;
+    margin: 100px auto 50px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 20;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 50px;
+    padding: 0 10px;
+  }
+  .header h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.2rem;
+    color: #ffd1e6;
+    margin-bottom: 15px;
+    text-shadow: 0 0 25px rgba(255, 107, 158, 0.6);
+    opacity: 0;
+    transform: translateY(-40px);
+    user-select: none;
+    position: relative;
+  }
+  .header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 3px;
+    background: linear-gradient(to right, transparent, #ff6b9e, transparent);
+    border-radius: 2px;
+    opacity: 0;
+    animation: slideIn 1s ease forwards 1.5s;
+  }
+  .header p {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    color: #ffb4d9;
+    max-width: 90%;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(30px);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    user-select: none;
+  }
+
+  .reasons-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
+    padding: 30px 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 182, 193, 0.3);
+    margin: 0 10px;
+  }
+
+  /* Decorative corners */
+  .frame-top-left, .frame-top-right, 
+  .frame-bottom-left, .frame-bottom-right {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #ff6b9e;
+    opacity: 0.8;
+    animation: pulseFrame 4s infinite ease-in-out;
+  }
+  .frame-top-left {
+    top: 12px; left: 12px;
+    border-right: none; border-bottom: none;
+    border-radius: 15px 0 0 0;
+  }
+  .frame-top-right {
+    top: 12px; right: 12px;
+    border-left: none; border-bottom: none;
+    border-radius: 0 15px 0 0;
+  }
+  .frame-bottom-left {
+    bottom: 12px; left: 12px;
+    border-right: none; border-top: none;
+    border-radius: 0 0 0 15px;
+  }
+  .frame-bottom-right {
+    bottom: 12px; right: 12px;
+    border-left: none; border-top: none;
+    border-radius: 0 0 15px 0;
+  }
+
+  .reasons-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px 0;
+  }
+
+  .reason-card {
+    background: linear-gradient(135deg, rgba(255, 182, 193, 0.2), rgba(255, 105, 180, 0.15));
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 25px 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(50px) rotate(3deg);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 182, 193, 0.25);
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  
+  .reason-card:nth-child(even) {
+    transform: translateY(50px) rotate(-3deg);
+  }
+  
+  .reason-card:hover, .reason-card:active {
+    transform: translateY(-8px) rotate(0) scale(1.02);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(255, 105, 180, 0.25));
+    z-index: 30;
+  }
+
+  .reason-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: 20px;
+  }
+  
+  .reason-card:hover::before {
+    opacity: 1;
+    animation: shimmer 2s infinite linear;
+  }
+
+  .reason-text {
+    color: #ffd1e6;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    font-weight: 600;
+    text-align: center;
+    user-select: text;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Floating footer */
+  .footer {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.4rem;
+    color: #ffa7d1;
+    text-shadow: 0 0 15px rgba(255,135,187,0.8);
+    z-index: 100;
+    opacity: 1;
+    user-select: none;
+    font-family: 'Dancing Script', cursive;
+    animation: floatText 4s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+
+  /* Animations */
+  @keyframes pulseFrame {
+    0%, 100% {
+      opacity: 0.6;
+      box-shadow: 0 0 8px rgba(255, 107, 158, 0.4);
+    }
+    50% {
+      opacity: 1;
+      box-shadow: 0 0 20px rgba(255, 107, 158, 0.8);
+    }
+  }
+  
+  @keyframes shimmer {
+    0% { transform: translateX(-100%) skewX(-15deg); }
+    100% { transform: translateX(100%) skewX(-15deg); }
+  }
+  
+  @keyframes slideIn {
+    0% { opacity: 0; transform: translateX(-50%) scaleX(0); }
+    100% { opacity: 1; transform: translateX(-50%) scaleX(1); }
+  }
+  
+  @keyframes floatText {
+    0% { transform: translateX(-50%) translateY(0); }
+    100% { transform: translateX(-50%) translateY(-12px); }
+  }
+  
+  @keyframes floatHeart {
+    0% {
+      transform: translateY(100vh) rotate(0deg);
+      opacity: 0;
+    }
+    10% { opacity: 0.4; }
+    90% { opacity: 0.4; }
+    100% {
+      transform: translateY(-100vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  /* Samsung J7 specific optimizations */
+  @media (max-width: 480px) {
+    .container {
+      margin: 90px auto 40px;
+      padding: 0 15px;
+    }
+    
+    .header {
+      margin-bottom: 40px;
+    }
+    
+    .header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+    }
+    
+    .header p {
+      font-size: 1.3rem;
+    }
+    
+    .reasons-container {
+      padding: 25px 15px;
+      margin: 0 5px;
+    }
+    
+    .reason-card {
+      padding: 20px 15px;
+    }
+    
+    .reason-text {
+      font-size: 1.2rem;
+      line-height: 1.4;
+    }
+    
+    .footer {
+      font-size: 1.2rem;
+      bottom: 20px;
+    }
+    
+    nav {
+      top: 12px; right: 12px;
+      padding: 8px 10px;
+    }
+    
+    .nav-link {
+      font-size: 12px;
+      padding: 8px 12px;
+      min-width: 40px;
+      min-height: 40px;
+    }
+  }
+
+  /* Very small screens */
+  @media (max-width: 360px) {
+    .header h1 {
+      font-size: 2.4rem;
+    }
+    
+    .header p {
+      font-size: 1.2rem;
+    }
+    
+    .reason-text {
+      font-size: 1.1rem;
+    }
+    
+    .reasons-container {
+      padding: 20px 12px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating hearts background -->
+<div class="hearts-container" id="hearts-container"></div>
+
+<nav aria-label="Navigation Menu">
+  <div class="nav-links">
+    <a href="index.html" class="nav-link"><i class="fas fa-home"></i></a>
+    <a href="memories.html" class="nav-link"><i class="fas fa-images"></i></a>
+    <a href="reasons.html" class="nav-link active"><i class="fas fa-heart"></i></a>
+    <a href="heartbeat.html" class="nav-link"><i class="fas fa-heartbeat"></i></a>
+    <a href="forever.html" class="nav-link"><i class="fas fa-infinity"></i></a>
+  </div>
+</nav>
+
+<div class="container" role="main" aria-label="Reasons I adore you">
+  <header class="header">
+    <h1 id="main-title">Reasons I Adore You</h1>
+    <p id="subtitle">Every beat of my heart whispers your name...</p>
+  </header>
+
+  <section class="reasons-container">
+    <div class="frame-top-left"></div>
+    <div class="frame-top-right"></div>
+    <div class="frame-bottom-left"></div>
+    <div class="frame-bottom-right"></div>
+
+    <div class="reasons-list" id="reasons-list"></div>
+  </section>
+</div>
+
+<div class="footer" aria-hidden="true">Made with all my love ❤️ Saurav</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const reasonsList = document.getElementById('reasons-list');
+  const heartsContainer = document.getElementById('hearts-container');
+  
+  const reasons = [
+    "I adore you because you make me smile like no one else... 😊",
+    "Your heart is pure gold and full of kindness... 💝", 
+    "You understand me without words, just with a look... 🤗",
+    "Your love makes every day feel like a beautiful adventure... 🌹",
+    "You're my dream come true, the love I always wished for... ✨",
+    "Your laughter is the most beautiful sound in my world... 🎶",
+    "You make me feel safe, loved, and truly cherished... 🛡️",
+    "With you, every moment becomes a precious memory... 📸",
+    "You inspire me to be a better person every day... 🌟",
+    "Your eyes hold the universe I want to explore forever... 🌌",
+    "Your touch sends shivers of joy through my soul... ✨",
+    "You're my anchor in life's stormy seas... ⚓",
+    "Your smile brightens even my darkest days... ☀️",
+    "You accept me completely, flaws and all... 💞",
+    "Your intelligence and wisdom always impress me... 🧠",
+    "You make ordinary moments feel extraordinary... ✨"
+  ];
+
+  // Create floating hearts background
+  function createFloatingHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'floating-heart';
+    heart.innerHTML = '❤️';
+    heart.style.left = `${Math.random() * 100}vw`;
+    heart.style.animationDuration = `${20 + Math.random() * 10}s`;
+    heart.style.animationDelay = `${Math.random() * 5}s`;
+    heartsContainer.appendChild(heart);
+    
+    setTimeout(() => heart.remove(), 30000);
+  }
+
+  // Create hearts periodically for romantic ambiance
+  setInterval(createFloatingHeart, 2000);
+
+  // Populate reason cards
+  reasons.forEach((text, i) => {
+    const card = document.createElement('div');
+    card.className = 'reason-card';
+    card.innerHTML = `<p class="reason-text">${text}</p>`;
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'article');
+    reasonsList.appendChild(card);
+  });
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Animate reason cards with staggered timing
+  const cards = document.querySelectorAll('.reason-card');
+  cards.forEach((card, i) => {
+    gsap.fromTo(card,
+      { opacity: 0, y: 50, rotation: i % 2 === 0 ? 4 : -4 },
+      {
+        opacity: 1,
+        y: 0,
+        rotation: 0,
+        duration: 1,
+        ease: 'back.out(1.7)',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        },
+        delay: i * 0.1
+      }
+    );
+  });
+
+  // Animate header elements
+  gsap.to("#main-title", {
+    opacity: 1, y: 0, 
+    duration: 1.5, 
+    ease: "elastic.out(1, 0.7)", 
+    delay: 0.4
+  });
+  
+  gsap.to("#subtitle", {
+    opacity: 1, y: 0, 
+    duration: 1.2, 
+    delay: 0.9
+  });
+
+  // Touch-friendly interactions for mobile
+  cards.forEach(card => {
+    let touchTimeout;
+    
+    card.addEventListener('touchstart', () => {
+      touchTimeout = setTimeout(() => {
+        gsap.to(card, { 
+          scale: 1.02, 
+          duration: 0.2 
+        });
+      }, 50);
+    });
+    
+    card.addEventListener('touchend', () => {
+      clearTimeout(touchTimeout);
+      gsap.to(card, { 
+        scale: 1, 
+        duration: 0.3 
+      });
+    });
+
+    // Add tap feedback
+    card.addEventListener('click', () => {
+      gsap.to(card, {
+        scale: 0.98,
+        duration: 0.1,
+        yoyo: true,
+        repeat: 1
+      });
+    });
+  });
+});
+
+</script>
+<audio id="backgroundMusic" 
+src="The_Chainsmokers_Ft_Halsey_-_CLOSER_Offblogmedia.com.mp3" 
+loop autoplay preload="auto">
+
+</audio>
+</body>
+</html>
+

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<title>Forever Us - Eternal Romance</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    background: linear-gradient(135deg, #fdf2f8, #fce7f3, #f3e8ff, #ede9fe);
+    color: #be185d;
+    font-family: 'Dancing Script', cursive;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    padding-bottom: 100px;
+    scroll-behavior: smooth;
+    animation: backgroundShift 25s infinite ease-in-out;
+  }
+
+  /* Romantic background color animation */
+  @keyframes backgroundShift {
+    0% { background: linear-gradient(135deg, #fdf2f8, #fce7f3, #f3e8ff, #ede9fe); }
+    25% { background: linear-gradient(135deg, #fff7ed, #ffedd5, #fef3c7, #fef9c3); }
+    50% { background: linear-gradient(135deg, #f0f9ff, #e0f2fe, #bae6fd, #dbeafe); }
+    75% { background: linear-gradient(135deg, #f0fdf4, #dcfce7, #bbf7d0, #d9f99d); }
+    100% { background: linear-gradient(135deg, #fdf2f8, #fce7f3, #f3e8ff, #ede9fe); }
+  }
+
+  /* Floating romantic background */
+  .hearts-container, .sparkles-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .floating-heart {
+    position: absolute;
+    font-size: 22px;
+    opacity: 0.4;
+    color: #f472b6;
+    animation: floatHeart 30s linear infinite;
+    will-change: transform;
+  }
+  .floating-sparkle {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #ec4899;
+    box-shadow: 0 0 10px #ec4899;
+    opacity: 0.5;
+    animation: floatSparkle 20s linear infinite;
+    will-change: transform;
+  }
+
+  /* Enhanced navigation */
+  nav {
+    position: fixed;
+    top: 20px; right: 20px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    border-radius: 50px;
+    padding: 12px 18px;
+    box-shadow: 0 10px 30px rgba(190, 24, 93, 0.15);
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+    border: 1px solid rgba(244, 114, 182, 0.2);
+    transition: transform 0.3s ease;
+  }
+  nav:hover {
+    transform: translateY(-3px);
+  }
+  nav a {
+    text-decoration: none;
+    color: #be185d;
+    font-weight: 700;
+    padding: 12px 16px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(244, 114, 182, 0.1);
+    transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+    background: rgba(253, 242, 248, 0.7);
+    touch-action: manipulation;
+    min-width: 44px; min-height: 44px;
+    justify-content: center;
+  }
+  nav a:hover, nav a.active {
+    background: linear-gradient(45deg, #f472b6, #ec4899);
+    color: white;
+    box-shadow: 0 8px 25px rgba(244, 114, 182, 0.4);
+    transform: translateY(-2px) scale(1.05);
+  }
+
+  .container {
+    max-width: 100%;
+    margin: 150px auto 50px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+  }
+
+  h1.title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 5rem;
+    background: linear-gradient(45deg, #be185d, #ec4899, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(244, 114, 182, 0.3);
+    margin-bottom: 50px;
+    animation: titleFloat 8s infinite ease-in-out;
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  /* New romantic quote animation */
+  .romantic-quote-container {
+    margin: 40px auto 60px;
+    max-width: 450px;
+    background: rgba(255 255 255 / 0.8);
+    border-radius: 40px;
+    padding: 30px 25px;
+    box-shadow: 0 10px 40px rgba(190, 24, 93, 0.15);
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    color: #d6336c;
+    position: relative;
+    z-index: 11;
+    filter: drop-shadow(0 0 20px #ec4899);
+    animation: quoteFadeIn 3s ease forwards;
+  }
+
+  @keyframes quoteFadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Cute couple cartoon image container */
+  .couple-cartoon {
+    margin: 0 auto 40px;
+    max-width: 220px;
+    filter: drop-shadow(0 4px 10px #f472b6);
+    animation: floatUpDown 6s ease-in-out infinite;
+  }
+
+  @keyframes floatUpDown {
+    0%, 100% {transform: translateY(0);}
+    50% {transform: translateY(-15px);}
+  }
+
+  /* Proposal button container */
+  .proposal-btn-container {
+    position: relative;
+    margin: 50px 0;
+  }
+
+  button.proposal-btn {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem;
+    background: linear-gradient(45deg, #f472b6, #ec4899, #be185d);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 25px 55px;
+    box-shadow: 0 15px 40px rgba(244, 114, 182, 0.3);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    touch-action: manipulation;
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+    z-index: 10;
+  }
+  button.proposal-btn:hover, button.proposal-btn:active {
+    background: linear-gradient(45deg, #ec4899, #be185d, #a21650);
+    box-shadow: 0 20px 50px rgba(244, 114, 182, 0.5);
+    transform: translateY(-8px) scale(1.05);
+  }
+  button.proposal-btn:active {
+    transform: translateY(-3px) scale(1);
+  }
+  .btn-glow {
+    position: absolute;
+    top: -12px; left: -12px; right: -12px; bottom: -12px;
+    background: linear-gradient(45deg, #f472b6, #ec4899, #be185d);
+    border-radius: 60px;
+    filter: blur(25px);
+    opacity: 0.4;
+    animation: pulseGlow 5s infinite ease-in-out;
+    z-index: -1;
+  }
+
+  .acceptance-message {
+    display: none;
+    margin-top: 50px;
+    text-align: center;
+    opacity: 0;
+  }
+  .acceptance-text {
+    font-size: 3.5rem;
+    font-family: 'Great Vibes', cursive;
+    color: #be185d;
+    text-shadow: 0 0 30px rgba(244, 114, 182, 0.4);
+    margin-bottom: 30px;
+    background: linear-gradient(45deg, #be185d, #ec4899, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .emoji-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 30px;
+  }
+  .emoji {
+    font-size: 4rem;
+    animation: emojiFloat 3s infinite ease-in-out;
+    text-shadow: 0 0 20px rgba(244, 114, 182, 0.4);
+    transition: transform 0.3s ease;
+  }
+  .emoji:hover {
+    transform: scale(1.3) rotate(10deg);
+  }
+  .emoji:nth-child(1) { animation-delay: 0.1s; }
+  .emoji:nth-child(2) { animation-delay: 0.3s; }
+  .emoji:nth-child(3) { animation-delay: 0.5s; }
+
+  /* Floating footer */
+  .footer {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    font-family: 'Dancing Script', cursive;
+    color: #be185d;
+    text-shadow: 0 0 15px rgba(244, 114, 182, 0.4);
+    user-select: none;
+    animation: footerFloat 6s infinite ease-in-out alternate;
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  /* Enhanced animations */
+  @keyframes titleFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-8px) rotate(1deg); }
+    75% { transform: translateY(-5px) rotate(-1deg); }
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0.3; transform: scale(0.95); }
+    50% { opacity: 0.6; transform: scale(1.05); }
+  }
+
+  @keyframes emojiFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    33% { transform: translateY(-15px) rotate(5deg); }
+    66% { transform: translateY(-8px) rotate(-3deg); }
+  }
+
+  @keyframes footerFloat {
+    0% { transform: translateX(-50%) translateY(0); }
+    100% { transform: translateX(-50%) translateY(-15px); }
+  }
+
+  @keyframes floatHeart {
+    0% {
+      transform: translateY(100vh) rotate(0deg);
+      opacity: 0;
+    }
+    5% { opacity: 0.4; }
+    95% { opacity: 0.4; }
+    100% {
+      transform: translateY(-100vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  @keyframes floatSparkle {
+    0% {
+      transform: translateY(100vh) translateX(0) rotate(0deg);
+      opacity: 0;
+    }
+    10% { opacity: 0.5; }
+    90% { opacity: 0.5; }
+    100% {
+      transform: translateY(-100vh) translateX(150px) rotate(720deg);
+      opacity: 0;
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .container {
+      margin: 120px auto 40px;
+      padding: 15px;
+    }
+    
+    h1.title {
+      font-size: 3.8rem;
+      margin-bottom: 40px;
+    }
+    
+    button.proposal-btn {
+      font-size: 1.9rem;
+      padding: 20px 45px;
+    }
+    
+    .acceptance-text {
+      font-size: 2.8rem;
+    }
+    
+    .emoji {
+      font-size: 3.2rem;
+    }
+    
+    .footer {
+      font-size: 1.3rem;
+      bottom: 20px;
+    }
+    
+    nav {
+      top: 15px; right: 15px;
+      padding: 10px 14px;
+    }
+    
+    nav a {
+      padding: 10px 12px;
+      font-size: 13px;
+      min-width: 42px;
+      min-height: 42px;
+    }
+    
+    .romantic-quote-container {
+      max-width: 90%;
+      font-size: 1.5rem;
+      padding: 20px;
+    }
+
+    .couple-cartoon {
+      max-width: 160px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    h1.title {
+      font-size: 3.2rem;
+    }
+    
+    button.proposal-btn {
+      font-size: 1.7rem;
+      padding: 18px 40px;
+    }
+    
+    .acceptance-text {
+      font-size: 2.5rem;
+    }
+    
+    nav a {
+      padding: 8px 10px;
+      min-width: 38px;
+      min-height: 38px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating romantic background -->
+<div class="hearts-container" id="hearts-container"></div>
+<div class="sparkles-container" id="sparkles-container"></div>
+
+<!-- Enhanced navigation -->
+<nav>
+  <a href="index.html" class="nav-link" aria-label="Home"><i class="fas fa-home"></i></a>
+  <a href="memories.html" class="nav-link" aria-label="Memories"><i class="fas fa-images"></i></a>
+  <a href="reasons.html" class="nav-link" aria-label="Reasons"><i class="fas fa-heart"></i></a>
+  <a href="heartbeat.html" class="nav-link" aria-label="Heartbeat"><i class="fas fa-heartbeat"></i></a>
+  <a href="forever.html" class="nav-link active" aria-label="Forever"><i class="fas fa-infinity"></i></a>
+</nav>
+
+<div class="container">
+  <h1 class="title" id="title">Forever Us</h1>
+
+  <!-- Cute couple cartoon image (SVG inline) -->
+  <div class="couple-cartoon" aria-label="Cute romantic couple cartoon" role="img" title="Cute Romantic Couple Cartoon">
+  <!-- Simple SVG couple cartoon -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" stroke="#be185d" stroke-width="2" stroke-linejoin="round" aria-hidden="true" focusable="false" >
+      <circle cx="35" cy="50" r="15" fill="#fce7f3"/>
+      <circle cx="85" cy="50" r="15" fill="#fce7f3"/>
+      <path d="M20 85c15 10 30 10 40 0" stroke="#ec4899" stroke-width="3" fill="none" />
+      <circle cx="30" cy="45" r="5" fill="#ec4899"/>
+      <circle cx="80" cy="45" r="5" fill="#ec4899"/>
+      <path d="M70 90c-10 10-20 10-30 0" stroke="#be185d" stroke-width="3" />
+      <path d="M50 40c10 20 20 20 30 0" stroke="#ec4899" stroke-width="3" />
+    </svg>
+  </div>
+
+  <!-- Romantic quote -->
+  <div class="romantic-quote-container" role="presentation" aria-label="Romantic Quote">
+    "In your smile, I see something more beautiful than the stars."
+  </div>
+
+  <div class="proposal-btn-container">
+    <button class="proposal-btn" id="proposalBtn">
+      <div class="btn-glow"></div>
+      Will You Be Mine Forever?
+    </button>
+  </div>
+
+  <div id="acceptanceMessage" class="acceptance-message">
+    <div class="acceptance-text">Yes! Forever and Always ❤️</div>
+    <div class="emoji-container">
+      <span class="emoji">💍</span>
+      <span class="emoji">💕</span>
+      <span class="emoji">🌹</span>
+    </div>
+  </div>
+</div>
+
+<div class="footer">Made with ❤️ By Saurav</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const heartsContainer = document.getElementById('hearts-container');
+  const sparklesContainer = document.getElementById('sparkles-container');
+  const proposalBtn = document.getElementById('proposalBtn');
+  const acceptanceMessage = document.getElementById('acceptanceMessage');
+  const title = document.getElementById('title');
+
+  // Create floating hearts background
+  function createFloatingHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'floating-heart';
+    const heartEmojis = ['❤️', '💖', '💕', '💗', '💘', '🌹', '🌸'];
+    heart.innerHTML = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+    heart.style.left = `${Math.random() * 100}vw`;
+    heart.style.animationDuration = `${30 + Math.random() * 20}s`;
+    heart.style.animationDelay = `${Math.random() * 10}s`;
+    heartsContainer.appendChild(heart);
+    setTimeout(() => heart.remove(), 50000);
+  }
+
+  // Create floating sparkles
+  function createSparkle() {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'floating-sparkle';
+    sparkle.style.left = `${Math.random() * 100}vw`;
+    sparkle.style.animationDuration = `${20 + Math.random() * 15}s`;
+    sparkle.style.animationDelay = `${Math.random() * 8}s`;
+    sparklesContainer.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 35000);
+  }
+
+  // Create romantic background elements
+  setInterval(createFloatingHeart, 2500);
+  setInterval(createSparkle, 1500);
+
+  // Animate page elements on load
+  gsap.to(title, {
+    opacity: 1,
+    y: 0,
+    duration: 1.5,
+    ease: "elastic.out(1, 0.8)",
+    delay: 0.3
+  });
+
+  gsap.to(proposalBtn, {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    duration: 1.2,
+    ease: "back.out(1.7)",
+    delay: 0.8
+  });
+
+  let touchTimeout;
+
+  proposalBtn.addEventListener('touchstart', () => {
+    touchTimeout = setTimeout(() => {
+      gsap.to(proposalBtn, { scale: 0.95, duration: 0.1 });
+    }, 50);
+  });
+
+  proposalBtn.addEventListener('touchend', () => {
+    clearTimeout(touchTimeout);
+    gsap.to(proposalBtn, { scale: 1, duration: 0.3, ease: "back.out(1.7)" });
+  });
+
+  proposalBtn.addEventListener('click', () => {
+    for(let i = 0; i < 25; i++) {
+      setTimeout(() => {
+        const burstHeart = document.createElement('div');
+        const burstEmojis = ['💖', '💕', '💗', '💘', '💝', '💞', '🌹', '🌸', '💍', '✨'];
+        burstHeart.innerHTML = burstEmojis[Math.floor(Math.random() * burstEmojis.length)];
+        burstHeart.style.position = 'fixed';
+        burstHeart.style.left = '50%';
+        burstHeart.style.top = '50%';
+        burstHeart.style.fontSize = `${20 + Math.random() * 15}px`;
+        burstHeart.style.pointerEvents = 'none';
+        burstHeart.style.zIndex = '9999';
+        document.body.appendChild(burstHeart);
+
+        const angle = (Math.PI * 2 * i) / 25;
+        const distance = 100 + Math.random() * 80;
+
+        gsap.to(burstHeart, {
+          x: Math.cos(angle) * distance,
+          y: Math.sin(angle) * distance - 50,
+          opacity: 0,
+          scale: 0,
+          rotation: Math.random() * 720,
+          duration: 2.5,
+          ease: 'power2.out',
+          onComplete: () => burstHeart.remove()
+        });
+      }, i * 40);
+    }
+
+    gsap.timeline()
+      .to(proposalBtn, {
+        scale: 0,
+        rotation: 360,
+        opacity: 0,
+        duration: 0.8,
+        ease: "back.in(2)"
+      })
+      .set(acceptanceMessage, { display: 'block' })
+      .fromTo(acceptanceMessage, 
+        { opacity: 0, scale: 0.5, y: 30 },
+        { 
+          opacity: 1, 
+          scale: 1, 
+          y: 0,
+          duration: 1.5, 
+          ease: "elastic.out(1, 0.8)"
+        }, "-=0.2")
+      .fromTo('.emoji', 
+        { scale: 0, rotation: -180 },
+        { 
+          scale: 1, 
+          rotation: 0,
+          duration: 1,
+          ease: "back.out(1.7)",
+          stagger: 0.2
+        }, "-=0.5");
+
+    document.body.style.animation = 'none';
+    document.body.style.background = 'linear-gradient(135deg, #fdf2f8, #fce7f3, #f3e8ff, #ede9fe)';
+    
+    setTimeout(() => {
+      document.body.style.background = 'linear-gradient(135deg, #fff7ed, #ffedd5, #fef3c7, #fef9c3)';
+    }, 1000);
+    
+    setTimeout(() => {
+      document.body.style.background = 'linear-gradient(135deg, #f0f9ff, #e0f2fe, #bae6fd, #dbeafe)';
+    }, 2000);
+  });
+
+  document.querySelectorAll('.nav-link').forEach(link => {
+    let navTouchTimeout;
+    link.addEventListener('touchstart', () => {
+      navTouchTimeout = setTimeout(() => {
+        gsap.to(link, { scale: 0.9, duration: 0.1 });
+      }, 50);
+    });
+    link.addEventListener('touchend', () => {
+      clearTimeout(navTouchTimeout);
+      gsap.to(link, { scale: 1, duration: 0.3, ease: "back.out(1.7)" });
+    });
+  });
+});
+</script>
+<audio id="backgroundMusic" src="The_Chainsmokers_Ft_Halsey_-_CLOSER_Offblogmedia.com.mp3" loop autoplay preload="auto"></audio>
+</body>
+</html>

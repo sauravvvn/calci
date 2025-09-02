@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<title>Enchanted Love Memory Lane</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(135deg, #fef7ff, #fce7f3, #f8bbd9, #f472b6);
+    color: #be185d;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 120px;
+    scroll-behavior: smooth;
+    animation: dreamyBgShift 25s infinite ease-in-out;
+  }
+  @keyframes dreamyBgShift {
+    0% { background: linear-gradient(135deg, #fef7ff, #fce7f3, #f8bbd9, #f472b6); }
+    15% { background: linear-gradient(135deg, #fff7ed, #ffedd5, #fed7aa, #fdba74); }
+    30% { background: linear-gradient(135deg, #f0f9ff, #e0f2fe, #a5f3fc, #67e8f9); }
+    45% { background: linear-gradient(135deg, #f0fdf4, #dcfce7, #bbf7d0, #86efac); }
+    60% { background: linear-gradient(135deg, #fffbeb, #fef3c7, #fde047, #eab308); }
+    75% { background: linear-gradient(135deg, #faf5ff, #f3e8ff, #e9d5ff, #c084fc); }
+    90% { background: linear-gradient(135deg, #fff1f2, #fecaca, #fca5a5, #f87171); }
+    100% { background: linear-gradient(135deg, #fef7ff, #fce7f3, #f8bbd9, #f472b6); }
+  }
+  .hearts-container, .sparkles-container, .petals-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .floating-heart {
+    position: absolute;
+    font-size: 22px;
+    opacity: 0.5;
+    color: #f472b6;
+    animation: floatHeart 30s linear infinite;
+    will-change: transform;
+  }
+  .floating-sparkle {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #ec4899;
+    box-shadow: 0 0 12px #ec4899;
+    opacity: 0.6;
+    animation: floatSparkle 20s linear infinite;
+    will-change: transform;
+  }
+  .floating-petal {
+    position: absolute;
+    width: 12px; height: 12px;
+    border-radius: 50% 0 50% 0;
+    background: linear-gradient(45deg, #fce7f3, #f472b6);
+    opacity: 0.4;
+    animation: floatPetal 35s linear infinite;
+    will-change: transform;
+  }
+  nav {
+    position: fixed;
+    top: 15px; right: 15px;
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+    backdrop-filter: blur(25px);
+    background: rgba(255,255,255,0.9);
+    border-radius: 50px;
+    padding: 12px 14px;
+    box-shadow: 0 10px 35px rgba(190, 24, 93, 0.2);
+    transition: all 0.4s ease;
+    border: 2px solid rgba(248, 187, 217, 0.4);
+    animation: navFloat 8s ease-in-out infinite alternate;
+  }
+  @keyframes navFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-5px); }
+  }
+  .nav-link {
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    background: linear-gradient(145deg, rgba(254, 247, 255, 0.9), rgba(252, 231, 243, 0.8));
+    box-shadow: 0 6px 18px rgba(244, 114, 182, 0.15);
+    color: #be185d;
+    text-decoration: none;
+    transition: all 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
+    position: relative;
+    overflow: hidden;
+    border: 2px solid rgba(244, 114, 182, 0.3);
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  .nav-link.active, .nav-link:hover {
+    background: linear-gradient(145deg, #f472b6, #ec4899, #be185d);
+    color: #fff;
+    box-shadow: 0 8px 25px rgba(244, 114, 182, 0.5);
+    transform: scale(1.15) rotate(5deg);
+    z-index: 10;
+  }
+  .nav-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.6), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    border-radius: 50%;
+  }
+  .nav-link:active::before {
+    opacity: 1;
+    animation: ripple 0.6s ease-out;
+  }
+  @keyframes ripple {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+  .container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 90px 20px 80px;
+    position: relative;
+    z-index: 20;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(244, 114, 182, 0.1), transparent 70%);
+    border-radius: 50%;
+    animation: headerGlow 6s ease-in-out infinite;
+    z-index: -1;
+  }
+  @keyframes headerGlow {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.6; }
+  }
+  .header h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 4rem;
+    background: linear-gradient(45deg, #be185d, #ec4899, #f472b6, #fbbf24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 25px;
+    text-shadow: 0 0 30px rgba(244, 114, 182, 0.4);
+    opacity: 0;
+    transform: translateY(-40px);
+    line-height: 1.2;
+    animation: titleShimmer 4s ease-in-out infinite;
+  }
+  @keyframes titleShimmer {
+    0%, 100% { filter: hue-rotate(0deg); }
+    50% { filter: hue-rotate(30deg); }
+  }
+  .header p {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem;
+    color: #be185d;
+    max-width: 90%;
+    margin: 0 auto;
+    line-height: 1.5;
+    opacity: 0;
+    transform: translateY(30px);
+    text-shadow: 0 4px 15px rgba(244, 114, 182, 0.3);
+    padding: 0 15px;
+  }
+  .timeline-container {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 50px 0;
+  }
+  .timeline-line {
+    position: absolute;
+    left: 25px;
+    top: 0;
+    height: 100%;
+    width: 6px;
+    background: linear-gradient(to bottom, #f472b6, #ec4899, #be185d, #a21650);
+    box-shadow: 0 0 20px rgba(244, 114, 182, 0.5);
+    border-radius: 6px;
+    z-index: 5;
+    animation: timelinePulse 3s ease-in-out infinite;
+  }
+  @keyframes timelinePulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(244, 114, 182, 0.5); }
+    50% { box-shadow: 0 0 30px rgba(244, 114, 182, 0.8); }
+  }
+  .memories-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    z-index: 10;
+    padding-left: 60px;
+  }
+  .memory-card {
+    position: relative;
+    opacity: 0;
+    transform: translateY(60px) rotate(2deg);
+    transition: all 0.7s cubic-bezier(0.175,0.885,0.32,1.275);
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  .memory-card:nth-child(even) {
+    transform: translateY(60px) rotate(-2deg);
+  }
+  .memory-dot {
+    position: absolute;
+    left: -70px;
+    top: 30px;
+    height: 40px;
+    width: 40px;
+    background: linear-gradient(145deg, #f472b6, #ec4899, #be185d);
+    border-radius: 50%;
+    border: 4px solid #fff;
+    box-shadow: 0 0 8px 12px rgba(244, 114, 182, 0.3), 0 0 20px 15px rgba(244, 114, 182, 0.4);
+    animation: pulseDot 4s infinite ease-in-out;
+    z-index: 15;
+    position: relative;
+  }
+  .memory-dot::after {
+    content: '💕';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    animation: heartBeat 2s infinite ease-in-out;
+  }
+  @keyframes heartBeat {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.2); }
+  }
+  .memory-content {
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(254,247,255,0.8));
+    backdrop-filter: blur(25px);
+    border-radius: 25px;
+    padding: 30px 25px;
+    box-shadow: 0 20px 50px rgba(244, 114, 182, 0.2);
+    border: 2px solid rgba(248, 187, 217, 0.4);
+    margin-bottom: 25px;
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .memory-content::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(244, 114, 182, 0.1), transparent);
+    opacity: 0;
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+  }
+  .memory-content h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.5rem;
+    background: linear-gradient(45deg, #be185d, #ec4899, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 18px;
+    text-shadow: 0 0 15px rgba(244, 114, 182, 0.3);
+  }
+  .memory-content p {
+    font-size: 1.4rem;
+    line-height: 1.7;
+    color: #be185d;
+    text-align: left;
+    user-select: text;
+    opacity: 0.95;
+  }
+  .memory-image {
+    border-radius: 22px;
+    overflow: hidden;
+    width: 100%;
+    height: 280px;
+    box-shadow: 0 25px 50px rgba(244, 114, 182, 0.25);
+    transition: all 0.5s ease;
+    border: 3px solid rgba(255,255,255,0.9);
+    position: relative;
+  }
+  .memory-image::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .memory-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* change here to show full image */
+    display: block;
+    transition: transform 0.8s ease;
+    background: white;
+  }
+  .memory-card:active {
+    transform: scale(0.97) rotate(0);
+  }
+  .memory-card:hover {
+    transform: translateY(-10px) rotate(0) scale(1.02);
+  }
+  .memory-card:hover .memory-content {
+    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(254,247,255,0.9));
+    box-shadow: 0 25px 60px rgba(244, 114, 182, 0.3);
+    transform: translateY(-5px);
+  }
+  .memory-card:hover .memory-content::before {
+    opacity: 1;
+    animation: shimmer 2s linear infinite;
+  }
+  @keyframes shimmer {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+  }
+  .memory-card:hover .memory-image {
+    box-shadow: 0 30px 70px rgba(244, 114, 182, 0.4);
+    transform: translateY(-3px);
+  }
+  .memory-card:hover .memory-image::after {
+    opacity: 1;
+  }
+  .memory-card:hover .memory-image img {
+    transform: scale(1.05);
+  }
+  .footer {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    background: linear-gradient(45deg, #be185d, #ec4899, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(244, 114, 182, 0.4);
+    user-select: none;
+    opacity: 1;
+    z-index: 50;
+    pointer-events: none;
+    animation: footerFloat 6s ease-in-out infinite alternate;
+  }
+  @keyframes pulseDot {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 0 8px 12px rgba(244, 114, 182, 0.3), 0 0 20px 15px rgba(244, 114, 182, 0.4);
+    }
+    50% {
+      transform: scale(1.15);
+      box-shadow: 0 0 12px 15px rgba(244, 114, 182, 0.5), 0 0 30px 20px rgba(244, 114, 182, 0.6);
+    }
+  }
+  @keyframes footerFloat {
+    0% { transform: translateX(-50%) translateY(0); }
+    100% { transform: translateX(-50%) translateY(-18px); }
+  }
+  @keyframes floatHeart {
+    0% {
+      transform: translateY(100vh) rotate(0deg);
+      opacity: 0;
+    }
+    5% { opacity: 0.5; }
+    95% { opacity: 0.5; }
+    100% {
+      transform: translateY(-100vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+  @keyframes floatSparkle {
+    0% {
+      transform: translateY(100vh) translateX(0) rotate(0deg);
+      opacity: 0;
+    }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% {
+      transform: translateY(-100vh) translateX(100px) rotate(720deg);
+      opacity: 0;
+    }
+  }
+  @keyframes floatPetal {
+    0% {
+      transform: translateY(100vh) translateX(0) rotate(0deg);
+      opacity: 0;
+    }
+    8% { opacity: 0.4; }
+    92% { opacity: 0.4; }
+    100% {
+      transform: translateY(-100vh) translateX(-80px) rotate(180deg);
+      opacity: 0;
+    }
+  }
+  @media (max-width: 480px) {
+    .container {
+      padding: 80px 18px 70px;
+    }
+    .header h1 {
+      font-size: 3.2rem;
+    }
+    .header p {
+      font-size: 1.5rem;
+    }
+    .memories-container {
+      padding-left: 45px;
+      gap: 40px;
+    }
+    .memory-dot {
+      left: -60px;
+      width: 35px;
+      height: 35px;
+    }
+    .memory-content {
+      padding: 25px 20px;
+    }
+    .memory-content h2 {
+      font-size: 2.1rem;
+    }
+    .memory-content p {
+      font-size: 1.3rem;
+    }
+    .memory-image {
+      height: 240px;
+    }
+    nav {
+      top: 12px; right: 12px;
+      padding: 10px 12px;
+    }
+    .nav-link {
+      width: 46px; height: 46px;
+      font-size: 16px;
+    }
+    .footer {
+      font-size: 1.3rem;
+      bottom: 20px;
+    }
+  }
+  @media (max-width: 360px) {
+    .header h1 {
+      font-size: 2.8rem;
+    }
+    .header p {
+      font-size: 1.4rem;
+    }
+    .memory-content h2 {
+      font-size: 1.8rem;
+    }
+    .memory-content p {
+      font-size: 1.2rem;
+    }
+    .memory-image {
+      height: 210px;
+    }
+    .nav-link {
+      width: 42px; height: 42px;
+      font-size: 15px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="hearts-container" id="hearts-container"></div>
+<div class="sparkles-container" id="sparkles-container"></div>
+<div class="petals-container" id="petals-container"></div>
+
+<nav>
+  <a href="index.html" class="nav-link" aria-label="Home"><i class="fas fa-home"></i></a>
+  <a href="memories.html" class="nav-link active" aria-label="Memories"><i class="fas fa-images"></i></a>
+  <a href="reasons.html" class="nav-link" aria-label="Reasons"><i class="fas fa-heart"></i></a>
+  <a href="heartbeat.html" class="nav-link" aria-label="Heartbeat"><i class="fas fa-heartbeat"></i></a>
+  <a href="forever.html" class="nav-link" aria-label="Forever"><i class="fas fa-infinity"></i></a>
+</nav>
+
+<div class="container" role="main" aria-label="Enchanted Love Memory Lane">
+  <div class="header">
+    <h1 id="main-title">Enchanted Love Memory Lane</h1>
+    <p id="subtitle">A timeless story of love, written in the stars and cherished in our hearts</p>
+  </div>
+
+  <div class="timeline-container">
+    <div class="timeline-line"></div>
+
+    <div class="memories-container">
+      <div class="memory-card">
+        <div class="memory-dot"></div>
+        <div class="memory-content">
+          <h2>First Meet</h2>
+          <p>It was a warm summer day at the junkyard cafe. We spoke for hours. I adore everything romantic about you, from the way you rest on my shoulder to riding a bike together. Time seems to stop when we're together, creating our own magical space.</p>
+        </div>
+        <div class="memory-image">
+          <img src="https://images.unsplash.com/photo-1533158307587-828f0a76ef46?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&w=800" alt="First Meeting" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="memory-card">
+        <div class="memory-dot"></div>
+        <div class="memory-content">
+          <h2>First Date</h2>
+          <p>We went to that little bakery. You had to hurry home because of your sister. When you came near to say goodbye, I realized I wanted to be with you every day for the rest of my life. As we walked away, I couldn't help but imagine all the moments we would share together, filled with joy and laughter. It felt as though I had discovered something truly special—a bond that would only grow stronger with time.</p>
+        </div>
+        <div class="memory-image">
+          <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&w=800" alt="First Date" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="memory-card">
+        <div class="memory-dot"></div>
+        <div class="memory-content">
+          <h2>First Stay</h2>
+          <p>That weekend at the cabin. We stayed up all day talking. Listening to songs with you is my favorite memory - the moment I realized I was home.</p>
+        </div>
+        <div class="memory-image">
+          <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&w=800" alt="First Vacation" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="memory-card">
+        <div class="memory-dot"></div>
+        <div class="memory-content">
+          <h2>Perfect Moment</h2>
+          <p>You planned the perfect things. You held my hand and whispered that you loved me for the first time. That moment is forever etched in my heart.</p>
+        </div>
+        <div class="memory-image">
+          <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&w=800" alt="Beach Sunset" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="memory-card">
+        <div class="memory-dot"></div>
+        <div class="memory-content">
+          <h2>Mahi's anger</h2>
+          <p>That challenging day when we argued and felt angry for hours stands out. Instead of silence, we communicated and worked through it. You remind me of understanding and patience.</p>
+        </div>
+        <div class="memory-image">
+          <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&w=800" alt="Mountain Hike" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="memory-card">
+        <div class="memory-dot"></div>
+        <div class="memory-content">
+          <h2>Mahi's Authority</h2>
+          <p>You took me back to the cafe where we first met. As we sat at the table, my 'yes' was the easiest and most joyful decision I've ever made.</p>
+        </div>
+        <div class="memory-image">
+          <img src="gble.jpg" alt="Our Engagement" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer" aria-hidden="true">Made with ❤️ By Saurav</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const heartsContainer = document.getElementById('hearts-container');
+  const sparklesContainer = document.getElementById('sparkles-container');
+  const petalsContainer = document.getElementById('petals-container');
+
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'floating-heart';
+    const heartEmojis = ['❤️', '💖', '💕', '💗', '💘', '🌹', '🌸', '💝', '💞', '🦋'];
+    heart.innerHTML = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+    heart.style.left = `${Math.random() * 100}vw`;
+    heart.style.fontSize = `${18 + Math.random() * 14}px`;
+    heart.style.animationDuration = `${30 + Math.random() * 20}s`;
+    heartsContainer.appendChild(heart);
+    setTimeout(() => heart.remove(), 50000);
+  }
+
+  function createSparkle() {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'floating-sparkle';
+    sparkle.style.left = `${Math.random() * 100}vw`;
+    sparkle.style.animationDuration = `${20 + Math.random() * 15}s`;
+    sparklesContainer.appendChild(sparkle);
+    setTimeout(() => sparkle.remove(), 35000);
+  }
+
+  function createPetal() {
+    const petal = document.createElement('div');
+    petal.className = 'floating-petal';
+    petal.style.left = `${Math.random() * 100}vw`;
+    petal.style.animationDuration = `${35 + Math.random() * 20}s`;
+    petalsContainer.appendChild(petal);
+    setTimeout(() => petal.remove(), 55000);
+  }
+
+  setInterval(createHeart, 1500);
+  setInterval(createSparkle, 1000);
+  setInterval(createPetal, 2500);
+
+  gsap.to('#main-title', {
+    opacity: 1, y: 0, duration: 2, ease: "elastic.out(1, 0.8)", delay: 0.5
+  });
+  gsap.to('#subtitle', {
+    opacity: 1, y: 0, duration: 1.5, delay: 1.2
+  });
+
+  const memoryCards = document.querySelectorAll('.memory-card');
+  memoryCards.forEach((card, index) => {
+    gsap.fromTo(card,
+      { opacity: 0, y: 50, rotation: index % 2 === 0 ? 2 : -2 },
+      {
+        opacity: 1, y: 0, rotation: 0, duration: 1.2,
+        ease: 'back.out(1.7)',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        },
+        delay: index * 0.2
+      }
+    );
+  });
+
+  memoryCards.forEach(card => {
+    let touchTimeout;
+    card.addEventListener('touchstart', () => {
+      touchTimeout = setTimeout(() => {
+        gsap.to(card, { scale: 1.02, duration: 0.3, ease: "power2.out" });
+      }, 100);
+    });
+    card.addEventListener('touchend', () => {
+      clearTimeout(touchTimeout);
+      gsap.to(card, { scale: 1, duration: 0.4, ease: "back.out(1.7)" });
+    });
+    card.addEventListener('click', () => {
+      gsap.timeline()
+        .to(card, { scale: 0.95, duration: 0.1 })
+        .to(card, { scale: 1.05, duration: 0.3, ease: "back.out(2)" })
+        .to(card, { scale: 1, duration: 0.2 });
+    });
+  });
+
+  document.querySelectorAll('.nav-link').forEach(link => {
+    let navTouchTimeout;
+    link.addEventListener('touchstart', () => {
+      navTouchTimeout = setTimeout(() => {
+        gsap.to(link, { scale: 0.85, duration: 0.1 });
+      }, 50);
+    });
+    link.addEventListener('touchend', () => {
+      clearTimeout(navTouchTimeout);
+      gsap.to(link, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.7)" });
+    });
+  });
+});
+</script>
+
+<audio id="backgroundMusic" src="The_Chainsmokers_Ft_Halsey_-_CLOSER_Offblogmedia.com.mp3" loop autoplay preload="auto"></audio>
+</body>
+</html>

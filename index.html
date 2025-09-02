@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Romantic Theme Unlock</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300&display=swap');
+  body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f9d5d3, #f3a7b6);
+    font-family: 'Poppins', sans-serif;
+    color: #5a2a31;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    overflow: hidden;
+    flex-direction: column;
+  }
+  .container {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 25px;
+    padding: 40px 60px;
+    max-width: 520px;
+    box-shadow: 0 4px 15px rgba(228, 110, 130, 0.4);
+    display: none;
+    animation: fadeIn 1s ease forwards;
+    position: relative;
+  }
+  h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.8rem;
+    margin-bottom: 10px;
+    color: #d43f5f;
+    text-shadow: 1px 1px 8px #6a1a29;
+  }
+  p, #typedLines {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    padding: 0 10px;
+    min-height: 90px;
+    white-space: pre-wrap;
+    color: #7f1d33;
+  }
+  .heart {
+    font-size: 3rem;
+    color: #d43f5f;
+    animation: pulse 1.5s infinite;
+    user-select: none;
+    margin-bottom: 20px;
+  }
+  @keyframes pulse {
+    0%, 100% {transform: scale(1); opacity: 0.8;}
+    50% {transform: scale(1.1); opacity: 1;}
+  }
+  footer {
+    font-size: 1rem;
+    color: #d43f5f;
+    font-style: italic;
+  }
+  #unlockSection {
+    background: rgba(255,255,255,0.85);
+    border-radius: 25px;
+    padding: 30px 40px;
+    box-shadow: 0 4px 15px rgba(228, 110, 130, 0.4);
+    margin-bottom: 30px;
+  }
+  input[type="text"] {
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: 2px solid #d43f5f;
+    font-size: 1.1rem;
+    outline: none;
+    width: 80%;
+    text-align: center;
+    transition: border-color 0.3s ease;
+    margin-top: 10px;
+  }
+  input[type="text"]:focus {
+    border-color: #f26b81;
+  }
+  button.unlock-btn, button.feel-love-btn {
+    margin-top: 15px;
+    background-color: #d43f5f;
+    border: none;
+    padding: 12px 28px;
+    color: white;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 0 8px #d43f5f;
+    transition: background-color 0.3s ease;
+  }
+  button.unlock-btn:hover, button.feel-love-btn:hover {
+    background-color: #f26b81;
+  }
+  button.feel-love-btn {
+    display: none;
+  }
+  #errorMsg {
+    color: #b84056;
+    margin-top: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    min-height: 24px;
+  }
+  @keyframes fadeIn { to { opacity: 1; }}
+  .heart-container {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    width: 60px;
+    height: 60px;
+  }
+  .heart-svg {
+    width: 24px;
+    height: 24px;
+    fill: #d43f5f;
+    animation: floatUp 3s ease-in-out infinite;
+  }
+  .heart-svg:nth-child(2) { animation-delay: 1s; width: 30px; height: 30px;}
+  .heart-svg:nth-child(3) { animation-delay: 2s; width: 18px; height: 18px;}
+  @keyframes floatUp {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 1;}
+    50% {transform: translateY(-25px) scale(1.2); opacity: 0.7;}
+  }
+  @media (max-width: 600px) {
+    .container {
+      max-width: 95vw;
+      padding: 24px 5vw;
+    }
+    h1 { font-size: 2.4rem; }
+    p, #typedLines { font-size: 1.08rem; }
+    input[type="text"] { width: 100%; }
+    button.unlock-btn, button.feel-love-btn { width: 100%; padding: 12px 0; font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+<div id="unlockSection" role="region" aria-label="Unlock Section">
+  <label for="passwordInput">Enter the secret word to unlock the love message:</label><br/><br/>
+  <input type="text" id="passwordInput" placeholder="Type the word here..." autocomplete="off" aria-required="true" aria-describedby="errorMsg" />
+  <button class="unlock-btn" onclick="checkPassword()">Unlock</button>
+  <div id="errorMsg" role="alert" aria-live="assertive"></div>
+</div>
+<div class="container" id="mainContent" aria-live="polite" aria-label="Love poem" style="display:none;">
+  <div class="heart" aria-hidden="true">❤</div>
+  <h1>Love Blooms</h1>
+  <p id="typedLines"></p>
+  <button class="feel-love-btn" onclick="feelLoveClicked()">Feel the Love</button>
+  <footer id="message" aria-live="polite"></footer>
+  <div class="heart-container" aria-hidden="true">
+    <svg class="heart-svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3a5.5 5.5 0 0 1 4.5 8.19A5.5 5.5 0 0 1 16.5 3C19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    <svg class="heart-svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3a5.5 5.5 0 0 1 4.5 8.19A5.5 5.5 0 0 1 16.5 3C19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    <svg class="heart-svg" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3a5.5 5.5 0 0 1 4.5 8.19A5.5 5.5 0 0 1 16.5 3C19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+  </div>
+</div>
+
+<script>
+  const fullLines = [
+    "Every moment with you feels like a beautiful dream.",
+    "Your smile lights up my world like the sweetest sunbeam.",
+    "My heart beats only for you, forever and always.",
+    "Together, we create a love story beyond words."
+  ];
+  const typedElement = document.getElementById('typedLines');
+  let lineIndex = 0;
+  let charIndex = 0;
+
+  function typeLine() {
+    if(lineIndex < fullLines.length) {
+      if(charIndex < fullLines[lineIndex].length) {
+        typedElement.textContent += fullLines[lineIndex].charAt(charIndex);
+        charIndex++;
+        setTimeout(typeLine, 80);
+      } else {
+        typedElement.textContent += "\n\n";
+        lineIndex++;
+        charIndex = 0;
+        setTimeout(typeLine, 700);
+      }
+    } else {
+      document.querySelector('.feel-love-btn').style.display = 'inline-block';
+    }
+  }
+
+  function checkPassword() {
+    const input = document.getElementById('passwordInput').value.trim().toLowerCase();
+    const errorMsg = document.getElementById('errorMsg');
+    if(input === "mahi is love") {
+      errorMsg.textContent = "";
+      document.getElementById('unlockSection').style.display = "none";
+      document.getElementById('mainContent').style.display = "block";
+      typedElement.textContent = "";
+      lineIndex = 0;
+      charIndex = 0;
+      typeLine();
+    } else {
+      errorMsg.textContent = "Incorrect word. Please try again.";
+    }
+  }
+
+  function feelLoveClicked() {
+    document.querySelector('.feel-love-btn').disabled = true;
+    setTimeout(() => {
+      window.location.href = '1index.html'; // redirect after 10s
+    }, 1000);
+  }
+</script>
+
+</body>
+</html>
